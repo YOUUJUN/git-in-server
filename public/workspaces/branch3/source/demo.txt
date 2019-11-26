@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<view className="yc-view yc-view-grid " style="" name="bill.grid" adoName="data_list" headerSort="true" rowSelectType="single" type="view_grid" onLoadAction="">
+<html><![CDATA[<div view-band='body'><div view-band='header_shell' class='yc-view-grid-header'><div class='yc-view-grid-header-content'><table view-band='header_table' cellspacing='0' cellpadding='0' border='0'  class='yc-view-grid-table'></table></div><div class='yc-view-grid-header-fixer'></div></div><div class='yc-view-grid-body' view-band='data_shell'><table view-band='data_table' cellspacing='0' cellpadding='0' border='0'  class='yc-view-grid-table'></table></div></div>]]></html>
+<header><![CDATA[[["$row"," ",30],["INVOICE_NO","回收单号",114],["IN_DATE","回收日期",100],["REGIST_DATE","注册日期",100],["CAR_NO","车牌号",120],["CAR_BRAND_NAME","品牌名",161],["CAR_SERIAL_NAME",",系列名",130],["INSPECT_FLAG","监销状态",100],["manager","管理",120]]]]></header>
+<extend><![CDATA[
+ { 
+	onLoad: function() {
+		this.bindListen($e.events.regEvent(this.getTable(), 'click', this, this.done));
+	},
+	done: function(event) {
+		var cell = event.target || event.srcElement;
+		var name = cell.getAttribute("action");
+		if (name == "show") {
+			var place = this.queryPlace(cell);a
+	        var rowid = place.rowid;
+			var options = {
+					success:{
+						method:function(){
+							this.call("Edit","","",{params:{rowid:rowid}});
+//							var container = this.getView("bill.container");
+//							container.placeView("center",["car.container"],true);
+//							container.placeView("center",this.getView("car.container"),true);ewewewe
+							var view_tab = $e.getView("main.tab");
+							var container = this.getView("car.container");
+							view_tab.setChildView(container);sdsdsds
+						},
+						context:this
+					}
+			}dsdwewewe
+			this.requestView("car.container",options)
+		}else if(name=="inspect"){assasas
+			if (window.confirm("是否确认监销???")) {
+				var place = this.queryPlace(cell);
+		        var rowid = place.rowid;
+				this.call("DestoryByList","","",{params:{rowid:rowid}});
+			}
+		}
+	}
+}
+]]></extend>
+
+<fields>
+<field  index="" name="INSPECT_FLAG" type="combobox" formatText="" validType="none">
+<html><![CDATA[<div class='field-select-content'><div class='field-text'><span class='field-icon-right'><i field-band='icon' class='fa fa-caret-down'></i></span><input type='text' placeholder='' ></div><dl field-band='list' class='drop-select'></dl></div>]]></html>
+<extend><![CDATA[]]></extend>
+<listData><![CDATA[0/不需监销;1/未监销;9/已监销]]></listData>
+<validExpression><![CDATA[]]></validExpression>
+</field><field  index="" name="manager" type="self" formatText="" validType="none">dsdsasas
+<html><![CDATA[<input type='text'>]]></html>
+<extend><![CDATA[
+{wewewewe
+    paint: function(cell, row, col, value, options) {
+        var html = "";
+        html += "<span class='yc-btn yc-btn-link' action='show'>查看</span>";
+        html += "<span class='yc-btn yc-btn-link' action='inspect'>确认监销</span>";wewewew
+        cell.innerHTML = html;
+    }
+}
+
+]]></extend>
+<listData><![CDATA[]]></listData>
+<validExpression><![CDATA[]]></validExpression>
+</field>
+</fields>
+</view>

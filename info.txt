@@ -1,0 +1,26 @@
+diff --git a/test2.js b/test3.js
+similarity index 100%
+rename from test2.js
+rename to test3.js
+
+
+diff --git a/test1.js b/test1.js
+deleted file mode 100644
+index a31ff2d..0000000
+--- a/test1.js
++++ /dev/null
+@@ -1 +0,0 @@
+-var a = "a"
+
+
+diff --git a/test1.js b/test1.js
+index e69de29..b61c1e6 100644
+--- a/test1.js
++++ b/test1.js
+@@ -0,0 +1 @@
++var a = "a"
+
+
+diff --git a/test/test1.js b/test/test1.js
+new file mode 100644
+index 0000000..e69de29

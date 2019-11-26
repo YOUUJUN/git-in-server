@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="/stylesheets/component.css">
+    <style>
+
+        #file{
+            width: 400px;
+            height:650px;
+        }
+
+        .btn{
+            display: block;
+            height: 40px;
+            line-height: 38px;
+            font-size: 20px;
+            margin-top: 20px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+<h2>测试...</h2><h2>版本名：<span id="name"><%= name %></span>></h2>
+
+
+<textarea id="file"></textarea>
+<button class="btn" onclick="send()">提交</button>
+<button class="btn" onclick="push()">比较冲突</button>
+
+
+
+
+<script src="https://cdn.bootcss.com/jquery/2.1.1/jquery.min.js"></script>
+<script>
+
+    (function(){
+
+        $.ajax({
+            type : 'POST',
+            url : '/getFile',
+            dataType : 'JSON',
+            success : function (msg) {
+                console.log("msg",msg);
+                document.getElementById("file").value = msg;
+            }
+        });
+
+    })();
+
+
+
+
+    function send(){
+        var value = document.getElementById("file").value;
+        var name = document.getElementById("name").innerText;
+        var path = ["demo.txt","test1.js"];
+        $.ajax({
+            type : 'POST',
+            url : '/commit',
+            data : {
+                username : name,
+                value : value,
+                filenames : path
+            },
+            dataType : 'JSON',
+            success : function (msg) {
+                console.log("send already!");
+                var status = msg.stat;
+                var data = msg.data;
+
+                document.getElementById("file").value = data;
+            }
+        });
+    }
+
+
+    function push(){
+        var name = document.getElementById("name").innerText;
+        $.ajax({
+            type : 'POST',
+            url : '/push',
+            data : {
+                username : name,
+                files : "demo.txt"
+            },
+            dataType : 'JSON',
+            success : function (msg) {
+                console.log("push already!");
+                console.log("msg",msg);
+
+                var names = msg.files;
+
+                names = names.split("\n");
+
+                console.log("names",names);
+
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // // 进入页面执行
+    // // 记录当前时间并转成时间戳
+    // const now = new Date().getTime();
+    // // 从缓存中获取用户上次退出的时间戳
+    // const leaveTime = parseInt(localStorage.getItem('leaveTime'), 10);
+    // // 判断是否为刷新，两次间隔在5s内判定为刷新操作
+    // const refresh = (now - leaveTime) <= 5000;
+    // // 测试alert
+    // if(refresh){
+    //     $.ajax({
+    //         type : 'POST',
+    //         url : '/logout',
+    //         data : {
+    //             status : '1'
+    //         },
+    //         dataType : 'JSON',
+    //         success : function (msg) {
+    //
+    //         }
+    //     });
+    //
+    // }
+    //
+    // // 退出当前页面执行
+    // window.onunload = function(e){ // ios 不支持 window.onbeforeunload()
+    //                                // 将退出时间存于localstorage中
+    //     localStorage.setItem('leaveTime', new Date().getTime());
+    // };
+
+
+
+
+
+    //刷新时向后台请求
+    window.onunload = function(e){
+
+        $.ajax({
+            type : 'POST',
+            url : '/logout',
+            data : {
+                status : '1'
+            },
+            dataType : 'JSON',
+            success : function (msg) {
+
+            }
+        });
+    };
+
+    // 关闭时向后台请求
+    window.onbeforeunload=function(e){
+        $.ajax({
+            type : 'POST',
+            url : '/logout',
+            data : {
+                status : '2'
+            },
+            dataType : 'JSON',
+            success : function (msg) {
+
+            }
+        });
+    }
+
+</script>
+
+</body>
+</html>

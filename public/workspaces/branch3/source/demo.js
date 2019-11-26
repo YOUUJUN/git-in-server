@@ -1,1 +1,0 @@
-"var a = \"a\";\n\nvar b = \"b\";\nvar c = \"c\";"
