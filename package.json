@@ -1,6 +1,6 @@
 {
-  "name": "git",
-  "version": "0.0.0",
+  "name": "git-in-server",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"
@@ -22,7 +22,15 @@
   },
   "main": "app.js",
   "devDependencies": {},
-  "author": "",
+  "author": "YOUJUN",
   "license": "ISC",
-  "description": ""
+  "description": "服务器端git管理，run in linux",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/YOUUJUN/git-in-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUUJUN/git-in-server/issues"
+  },
+  "homepage": "https://github.com/YOUUJUN/git-in-server#readme"
 }
