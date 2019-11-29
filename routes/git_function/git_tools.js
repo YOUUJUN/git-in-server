@@ -1,6 +1,7 @@
 var {exec} = require("child_process");
 const { spawn } = require('child_process');
 const { execFile } = require('child_process');
+const noop = require('lodash/noop');
 
 function git() {
 
@@ -10,9 +11,7 @@ git.prototype = {
 
     /*---git clone---*/
     clone : function (originPath, workPath, callback){
-        if(callback){
-            callback = callback;
-        }
+        callback = callback || noop;
         execFile('git',['clone', originPath],{cwd : workPath}, function (err, stdout, stderr) {
             if(err){
                 callback(err);
@@ -35,9 +34,7 @@ git.prototype = {
 
     /*---deal git push unsuccessful*/
     dealPushIssue : function(path,callback) {
-        if(callback){
-            callback = callback;
-        }
+        callback = callback || noop;
         execFile("git",['config','receive.denyCurrentBranch','ignore'],{cwd : path},function(err, stdout, stderr){
             if(err){
                 callback(err);
@@ -56,9 +53,7 @@ git.prototype = {
 
     /*---git add---*/
     add : function(target, path, callback){
-        if(callback){
-            callback = callback;
-        }
+        callback = callback || noop;
         execFile("git",['add',target],{cwd : path},function(err, stdout, stderr){
             if(err){
                 callback(err);
@@ -75,9 +70,7 @@ git.prototype = {
 
     /*---git commit ---*/
     commit : function(path, message, callback){
-        if(callback){
-            callback = callback;
-        }
+        callback = callback || noop;
         execFile("git",['commit','-m',message],{cwd : path},function(err, stdout, stderr){
             if(err){
                 callback(err);
@@ -95,9 +88,7 @@ git.prototype = {
 
     /*---git commit all ---*/
     commitAll : function(path,message,callback) {
-        if(callback){
-            callback = callback;
-        }
+        callback = callback || noop;
         execFile("git",['commit','-a','-m',message],{cwd : path},function(err, stdout, stderr){
             if(err){
                 callback(err);
@@ -115,9 +106,7 @@ git.prototype = {
 
     /*---git push ---*/
     push : function (remote, path, callback) {
-        if(callback){
-            callback = callback;
-        }
+        callback = callback || noop;
 
         if(!remote){
             remote = "";
@@ -136,14 +125,11 @@ git.prototype = {
 
             callback(null);
         })
-    }
+    },
 
     /*---git push ---*/
     pushForce : function (remote, path, callback) {
-        if(callback){
-            callback = callback;
-        }
-
+        callback = callback || noop;
         if(!remote){
             remote = "";
         }
